@@ -1,0 +1,39 @@
+https://dontpad.com/ifprddm
+
+1)Implemente a navegação de pelo menos 10 widgets do SEU projeto. 
+ - Lembre-se que o projeto deve ser único, relevante e coerente - deve estar validada pelo professor!
+ - De prioridade na lógica de navegação e no sentido dos widgets - por enquanto não precisa "desenhar" completamente;
+ - Se der tempo, vai tentando implementar e caso não consiga, faça a prototipação por meio de outro recurso (pode ser no caderno).
+2)Em flutter, o que é rotas (Route)? Para que serve?
+R: Route é uma ferramenta de guardar rotas para navegação entre componentes
+
+3)Para definir uma rota (Route) é necessário utilizar qual classe? O construtor requer parâmetro (se sim, indique o tipo e objetivo)?
+R:utiliza a classe Route passa de parametro o contexto
+
+4)Em flutter, o que é necessário para implementar uma "navegação"?
+R: Um material app e widgets, pode ser chamado a navegação mesmo sem rotas direcionando aos componentes
+
+5)Quais são os principais métodos de navegação? Explique detalhadamente a assinatura do método.
+R:push adiciona uma rota e navega para ela
+pop retira uma rota e volta para a anterior
+
+6)O "context" é necessário para realizar uma das operações do Navigator. Neste contexto, qual é o seu tipo e para por qual motivo ele é necessário?
+R:push, o context é o link de um widget e seus relacionamentos 
+
+7)Exemplifique (sem copiar e colar) o uso de Navigator com e sem a referência anônima. Na sua opinião: qual a diferença? qual é a mais fácil? é possível entender as duas?
+R: o navigation pode ser feito usando o push e pushNamed, no primeiro é refereciado um componente, no segunda uma rota que pode referenciar a um componente, o mais facil é o sem nome por não necessitar criar um array de rotas, mas com um array de rotas é mais conciso as navegações e temos uma referencia de todas as rotas e possiveis configurações delas
+
+8)Qual a diferença entre push e pushReplacedNamed? Em que caso utilizamos cada uma?
+R: O Replace significa que ele da replace nas rotas significando que a proxima rota não sera filha da anterior, named significa que ele ira referenciar uma rota e não um componente direto
+
+9)Qual a diferença entre pop e popAndPushNamed? Em que caso utilizamos cada uma?
+R:O Replace significa que ele da replace nas rotas significando que rota anterior não sera filha da anterior, named significa que ele ira referenciar uma rota e não um componente direto
+
+10)O que são e para que servem as rotas nomeadas?
+R:Rotas nomeadas são um array de nomes referenciando componetes, se o nome x navegado o ele vai para seu componente
+
+11) Em relação as rotas, deste as formas apresentadas, qual seria a melhor? Justifique.
+R: O mais facil é o sem nome por não necessitar criar um array de rotas, mas com um array de rotas é mais conciso as navegações e temos uma referencia de todas as rotas e possiveis configurações delas 
+12) Em relação ao push e pashNamed: qual a diferença? os parametros são posicionais ou nomeados?
+R: um referencia o componete direto o segunto um nome que pode referenciar um componete
+13) REALIZAR ATIVIDADES QUE CONSTA EM: layout/lib/tela/primeira_pagina.dart
