@@ -11,19 +11,23 @@ class Login extends StatefulWidget {
   }
 }
 class _MyStatefulWidgetState extends State<StatefulWidget> {
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: LeadingBar('Login'),
-      body: Container(
-        width: 100,
-        height: 100,
-        child: ElevatedButton(
-            style: ButtonStyle(alignment: Alignment.center, ),
-            onPressed: () => (Navigator.pushReplacementNamed(context, '/home')),
-            child: const Text('Home')
-          )
+      body: Form(
+        key: _formKey,
+        child: Column(
+          children: <Widget>[
+            ElevatedButton(
+              style: ButtonStyle(alignment: Alignment.center, ),
+              onPressed: () => (Navigator.pushReplacementNamed(context, '/home')),
+              child: const Text('Home')
+            )
+          ],
+        )
       )
     );
   }

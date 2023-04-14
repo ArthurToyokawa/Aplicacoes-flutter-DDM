@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dnd/components/leading_bar.dart';
 
 
-class PersonagemCadastro extends StatefulWidget {
-  const PersonagemCadastro({super.key});
+class RolarCombate extends StatefulWidget {
+  const RolarCombate({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -15,9 +15,9 @@ class _MyStatefulWidgetState extends State<StatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: LeadingBar('Cadastro'),
+      appBar: LeadingBar('RolarCombate'),
       body: Center(
-        child: Text('Cadastro personagens'),
+        child: Text('RolarCombate'),
       ),
     );
   }
