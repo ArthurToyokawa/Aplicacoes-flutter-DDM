@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dnd/components/big_button.dart';
 import 'package:flutter_dnd/components/leading_bar.dart';
 import 'package:flutter_dnd/models/personagem.dart';
 import 'package:flutter_dnd/services/personage_service.dart';
@@ -26,34 +27,29 @@ class _PersonagemListState extends State<PersonagemList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: LeadingBar('Personagens'),
-      body: Row(
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: _personagens.map((p) => 
-                  Row(
-                    children: [
-                      Flexible(
-                        fit: FlexFit.tight, 
-                        flex: 1,
-                        child: Text(p.nome),
-                      ),
-                      Flexible(
-                        fit: FlexFit.tight, 
-                        flex: 1,
-                        child: Text(p.classe),
-                      )
-                    ]
-                  )
-                ).cast<Widget>().toList()
-            ),
+          Table(
+            border: TableBorder.all( width: 1.5),
+            columnWidths: const {
+              0: FlexColumnWidth(1.5),
+              1: FlexColumnWidth(2),
+            },
+            children: _personagens.map((p) => 
+              TableRow(
+                children: [
+                  Text(p.nome),
+                  Text(p.classe),
+                ]
+              )
+            ).cast<TableRow>().toList()
           ),
-          const Flexible(
-            fit: FlexFit.tight,
-            child: Text('1')
+          BigButton(
+            'Criar novo personagem', 
+            () {Navigator.pushNamed(context, '/personagens_cadastro');}
           ),
+          
         ]
       )
     );

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dnd/pages/calculos.dart';
 import 'package:flutter_dnd/pages/home.dart';
 import 'package:flutter_dnd/pages/login.dart';
 import 'package:flutter_dnd/pages/monstros.dart';
 import 'package:flutter_dnd/pages/monstros_cadastro.dart';
-import 'package:flutter_dnd/pages/personagemList.dart';
+import 'package:flutter_dnd/pages/personagem_list.dart';
 import 'package:flutter_dnd/pages/personagens_cadastro.dart';
+import 'package:flutter_dnd/pages/recuperar_senha.dart';
 import 'package:flutter_dnd/pages/rolar_combate.dart';
 import 'package:flutter_dnd/pages/rolar_dados.dart';
 
@@ -20,16 +22,18 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       routes: {
-        '/home':(context) => Home(),
-        '/login': (context) => Login(),
-        '/Personagens':(context) => PersonagemList(), 
-        '/Personagens_cadastro':(context) => PersonagemCadastro(), 
-        '/monstros':(context) => MonstrosList(), 
-        '/monstros_cadstro':(context) => MonstrosCadastro(), 
-        '/rolar_dados':(context) => RolarDados(), 
-        '/rolar_combate':(context) => RolarCombate(), 
+        '/home':(context) => const Home(),
+        '/login': (context) => const Login(),
+        '/recuperar_senha': (context) => const RecuperarSenha(),
+        '/personagens':(context) => const PersonagemList(), 
+        '/personagens_cadastro':(context) => const PersonagemCadastro(), 
+        '/monstros':(context) => const MonstrosList(), 
+        '/monstros_cadstro':(context) => const MonstrosCadastro(), 
+        '/calculos':(context) => const Calculos(), 
+        '/rolar_dados':(context) => const RolarDados(), 
+        '/rolar_combate':(context) => const RolarCombate(), 
       },
-      home: Login(),
+      home: const Login(),
       theme: ThemeData(
         primarySwatch: Colors.blue,
       )

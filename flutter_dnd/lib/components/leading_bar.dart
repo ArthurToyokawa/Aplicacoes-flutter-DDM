@@ -15,15 +15,16 @@ class LeadingBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       actions: <Widget>[
       if(showHomeButton)
-      IconButton(
-        onPressed: () => {Navigator.pushNamed(context, '/')},
-        icon:Icon(
-          Icons.home, 
-          color: Colors.blue.shade700, 
-          size: 30,
+        Center(
+          child: IconButton(
+            onPressed: () => {Navigator.pushNamed(context, '/home')},
+            icon:Icon(
+              Icons.home, 
+              color: Colors.blue.shade700, 
+              size: 30,
+            )
+          ),
         )
-      ),
-      
       ],
       title: Text(title),
     );
