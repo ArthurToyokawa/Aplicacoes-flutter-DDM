@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dnd/components/big_button.dart';
 import 'package:flutter_dnd/components/leading_bar.dart';
-import 'package:flutter_dnd/models/personagem.dart';
-import 'package:flutter_dnd/services/personagem_service.dart';
+import 'package:flutter_dnd/models/monstro.dart';
+import 'package:flutter_dnd/services/monstro_service.dart';
 
 
-class PersonagemList extends StatefulWidget {
-  const PersonagemList({super.key});
+class MonstroList extends StatefulWidget {
+  const MonstroList({super.key});
 
   @override
-  _PersonagemListState createState() {	
-    return _PersonagemListState();	
+  _MonstroListState createState() {	
+    return _MonstroListState();	
   }
 }
-class _PersonagemListState extends State<PersonagemList> {
-  final _personagemService = PersonagemService();
-  List<Personagem> _personagens = [];
+class _MonstroListState extends State<MonstroList> {
+  final _monstroService = MonstroService();
+  List<Monstro> _monstros = [];
 
   @override
   void initState() {
     super.initState();
-    _personagens = _personagemService.getAll();
+    _monstros = _monstroService.getAll();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: LeadingBar('Personagens'),
+      appBar: LeadingBar('Monstros'),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -76,15 +76,15 @@ class _PersonagemListState extends State<PersonagemList> {
                     ),
                   ],
                 ),
-                ..._personagens.map(
-                  (p) => TableRow(
+                ..._monstros.map(
+                  (m) => TableRow(
                     children: [
                       TableCell(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Padding( 
                             padding: const EdgeInsets.only(left:8), 
-                            child: Text(p.nome),
+                            child: Text(m.nome),
                           )
                         ),
                       ),
@@ -93,7 +93,7 @@ class _PersonagemListState extends State<PersonagemList> {
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Padding( 
                             padding: const EdgeInsets.only(left:8), 
-                            child: Text(p.classe),
+                            child: Text(m.classe),
                           )
                         ),
                       ),
@@ -104,9 +104,9 @@ class _PersonagemListState extends State<PersonagemList> {
             ),
           ),
           BigButton(
-            'Criar novo personagem',
+            'Criar novo monstro',
             () {
-              Navigator.pushNamed(context, '/personagens_cadastro');
+              Navigator.pushNamed(context, '/monstros_cadastro');
             },
           ),
         ],

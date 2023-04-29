@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -8,24 +6,25 @@ import 'package:flutter_dnd/components/big_button.dart';
 import 'package:flutter_dnd/components/leading_bar.dart';
 
 
-class RolarDados extends StatefulWidget {
-  const RolarDados({super.key});
+class RolarAtaque extends StatefulWidget {
+  const RolarAtaque({super.key});
 
   @override
   State<StatefulWidget> createState() {
     return _MyStatefulWidgetState();
   }
 }
+
 class _MyStatefulWidgetState extends State<StatefulWidget> {
   final _formKey = GlobalKey<FormState>();
-  final numController = TextEditingController();
-  final sidesController = TextEditingController();
-  List<int> rolls = [];
+  final hitController = TextEditingController();
+  final acController = TextEditingController();
+  int ?roll;
 
   @override
   void dispose() {
-    numController.dispose();
-    sidesController.dispose();
+    hitController.dispose();
+    acController.dispose();
     super.dispose();
   }
 
@@ -45,7 +44,7 @@ class _MyStatefulWidgetState extends State<StatefulWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Numero de dados',
+                      'Modificador de acerto',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16.0,
@@ -53,25 +52,25 @@ class _MyStatefulWidgetState extends State<StatefulWidget> {
                     ),
                     const SizedBox(height: 8.0),
                     TextFormField(
-                      controller: numController,
+                      controller: hitController,
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.digitsOnly
                       ],
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Por favor, insira um numero de dados';
+                          return 'Por favor, insira o modidificador de acerto';
                         }
                         return null;
                       },
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: 'Digite o numero de dados que seram jogados',
+                        hintText: 'Digite o modidificador de acerto',
                       ),
                     ),
                     const SizedBox(height: 16.0),
                     const Text(
-                      'Numero de lados do dado',
+                      'Classe de armadura do oponente',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16.0,
@@ -79,33 +78,31 @@ class _MyStatefulWidgetState extends State<StatefulWidget> {
                     ),
                     const SizedBox(height: 8.0),
                     TextFormField(
-                      controller: sidesController,
+                      controller: acController,
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.digitsOnly
                       ],
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Por favor, insira o numero de lados do dado';
+                          return 'Por favor, insira a classe de armadura';
                         }
                         return null;
                       },
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: 'Digite o numero de lados do dado',
+                        hintText: 'Digite a classe de armadura do oponente',
                       ),
                     ),
                     const SizedBox(height: 8.0),
                     BigButton(
-                      'Rolar dado', 
+                      'Calcular acerto', 
                       () {
                         if (_formKey.currentState!.validate()) {
-                          var numOfDice = int.parse(numController.text);
-                          var numOfSides = int.parse(sidesController.text);
+                          var numOfDice = int.parse(hitController.text);
+                          var numOfSides = int.parse(acController.text);
                           setState(() {
-                            rolls = List.generate(numOfDice, (index) => (
-                              Random().nextInt(numOfSides)+1
-                            ));
+                            roll = Random().nextInt(20)+1;
                           });
                         }
                       }
@@ -114,14 +111,16 @@ class _MyStatefulWidgetState extends State<StatefulWidget> {
                 ),
               ),
               Text(
-                rolls.isNotEmpty ? 'Resultado: ${rolls.join(', ')}' : '',
+                roll != null ? 'Redultado do d20: ${roll}' : '',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 24.0,
                 ),
               ),
               Text(
-                rolls.isNotEmpty ? 'Total: ${rolls.reduce((total, roll) => total + roll)}' : '',
+                roll != null ? 
+                  'Resultado: ${roll! + int.parse(hitController.text) >= int.parse(acController.text)? 'acerto' : 'erro'}'
+                  : '',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 24.0,
