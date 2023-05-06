@@ -9,8 +9,13 @@ import 'package:flutter_dnd/pages/personagens_cadastro.dart';
 import 'package:flutter_dnd/pages/recuperar_senha.dart';
 import 'package:flutter_dnd/pages/rolar_ataque.dart';
 import 'package:flutter_dnd/pages/rolar_dados.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:sqflite/sqflite.dart';
 
-void main() {
+Future main() async {
+  sqfliteFfiInit();
+
+  databaseFactory = databaseFactoryFfi;
   runApp(const MyApp());
 }
 

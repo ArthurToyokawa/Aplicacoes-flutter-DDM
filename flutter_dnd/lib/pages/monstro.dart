@@ -1,7 +1,12 @@
+import 'dart:ffi';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dnd/components/big_button.dart';
 import 'package:flutter_dnd/components/leading_bar.dart';
+import 'package:flutter_dnd/db/dnd_database.dart';
 import 'package:flutter_dnd/models/monstro.dart';
+import 'package:flutter_dnd/models/personagem.dart';
 import 'package:flutter_dnd/services/monstro_service.dart';
 
 
@@ -17,10 +22,28 @@ class _MonstroListState extends State<MonstroList> {
   final _monstroService = MonstroService();
   List<Monstro> _monstros = [];
 
+  List<Personagem> personagens = [];
+
   @override
   void initState() {
     super.initState();
     _monstros = _monstroService.getAll();
+    refreshPersonagem();
+  }
+  
+  // @override
+  // void dispose() {
+  //   DndDatabase.instance.close();
+
+  //   super.dispose();
+  // }
+
+  Future refreshPersonagem() async {
+    // setState(() => isLoading = true);
+
+    personagens = await DndDatabase.instance.getAll();
+    log(personagens[0].nome);
+    // setState(() => isLoading = false);
   }
 
   @override
@@ -109,6 +132,7 @@ class _MonstroListState extends State<MonstroList> {
               Navigator.pushNamed(context, '/monstros_cadastro');
             },
           ),
+          if(personagens.length != 0) Text('${personagens[0].nome}')
         ],
       ),
     );
