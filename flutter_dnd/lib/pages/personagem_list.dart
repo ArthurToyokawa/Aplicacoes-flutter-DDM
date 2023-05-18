@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dnd/components/big_button.dart';
 import 'package:flutter_dnd/components/leading_bar.dart';
+import 'package:flutter_dnd/db/dnd_database.dart';
 import 'package:flutter_dnd/models/personagem.dart';
 import 'package:flutter_dnd/services/personagem_service.dart';
 
@@ -16,11 +19,24 @@ class PersonagemList extends StatefulWidget {
 class _PersonagemListState extends State<PersonagemList> {
   final _personagemService = PersonagemService();
   List<Personagem> _personagens = [];
+  List<Personagem> personagens = [];
 
   @override
   void initState() {
     super.initState();
     _personagens = _personagemService.getAll();
+    refreshPersonagem();
+  }
+
+  Future refreshPersonagem() async {
+    // setState(() => isLoading = true);
+
+    var p = await DndDatabase.instance.getAll();
+    setState(() {
+      personagens = p;
+    });
+    log(personagens[0].nome);
+    // setState(() => isLoading = false);
   }
 
   @override
@@ -76,7 +92,7 @@ class _PersonagemListState extends State<PersonagemList> {
                     ),
                   ],
                 ),
-                ..._personagens.map(
+                ...personagens.map(
                   (p) => TableRow(
                     children: [
                       TableCell(
@@ -109,6 +125,7 @@ class _PersonagemListState extends State<PersonagemList> {
               Navigator.pushNamed(context, '/personagens_cadastro');
             },
           ),
+          if(personagens.length != 0) Text('${personagens[0].nome}')
         ],
       ),
     );
