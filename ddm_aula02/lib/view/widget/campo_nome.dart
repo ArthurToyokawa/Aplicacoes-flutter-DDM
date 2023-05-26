@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ddm_aula02/view/widget/campo_interface.dart';
 
-// ignore: use_key_in_widget_constructors
-class CampoNome extends StatelessWidget implements CampoInterface{
+class CampoNome extends StatelessWidget {
   final qtdeMinimaCaracteres = 3;
   final mascara = '[A-Za-z\u00C0-\u00FF]';
-  final controle = TextEditingController();
-  
+  final TextEditingController controle;
+  const CampoNome({required this.controle, Key? key}) : super(key: key);
+
   @override 
   Widget build(BuildContext context){
     return TextFormField(
@@ -33,10 +32,5 @@ class CampoNome extends StatelessWidget implements CampoInterface{
   String? temMinimoCaracteres(String? valorDigitado){
     if(valorDigitado!.length < qtdeMinimaCaracteres) return 'O campo deve possuir pelo menos 3 caracteres';
     return null;
-  }
-
-  @override
-  String getValue(){
-    return controle.text;
   }
 }

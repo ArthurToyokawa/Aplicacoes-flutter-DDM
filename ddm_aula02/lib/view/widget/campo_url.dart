@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ddm_aula02/view/widget/campo_interface.dart';
 
-// ignore: use_key_in_widget_constructors
-class CampoURL extends StatelessWidget implements CampoInterface{
-  final controle = TextEditingController();
-  
+class CampoURL extends StatelessWidget {
+  final TextEditingController controle;
+  const CampoURL({required this.controle, Key? key}) : super(key: key);
+
   @override 
   Widget build(BuildContext context){
     return TextFormField(
@@ -23,10 +22,5 @@ class CampoURL extends StatelessWidget implements CampoInterface{
   String? ehVazio(String? valorDigitado){
     if(valorDigitado == null || valorDigitado.isEmpty) return 'O campo é obrigatório';
     return null;
-  }
-
-  @override
-  String getValue(){
-    return controle.text;
   }
 }

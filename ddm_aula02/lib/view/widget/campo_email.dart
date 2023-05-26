@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ddm_aula02/view/widget/campo_interface.dart';
 
-// ignore: use_key_in_widget_constructors
-class CampoEmail extends StatelessWidget implements CampoInterface{
-  final controle = TextEditingController();
-  
+class CampoEmail extends StatelessWidget {
+  final TextEditingController controle;
+  const CampoEmail({required this.controle, Key? key}) : super(key: key);
+
   @override 
   Widget build(BuildContext context){
     return TextFormField(
@@ -15,7 +14,6 @@ class CampoEmail extends StatelessWidget implements CampoInterface{
           ehVazio(valorDigitado) ?? 
           temArroba(valorDigitado);
         return msnErro;
-          
       },
       decoration: const InputDecoration( 
         label: Text('E-mail:'),
@@ -32,10 +30,5 @@ class CampoEmail extends StatelessWidget implements CampoInterface{
   String? temArroba(String? valorDigitado){
     if(!valorDigitado!.contains('@')) return 'E-mail deve porruir "@".';
     return null;
-  }
-
-  @override
-  String getValue(){
-    return controle.text;
   }
 }

@@ -1,8 +1,9 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dnd/components/big_button.dart';
 import 'package:flutter_dnd/components/leading_bar.dart';
+import 'package:flutter_dnd/dao/personagem_dao_interface.dart';
+import 'package:flutter_dnd/dao/personagem_dao_sqlite.dart';
+import 'package:flutter_dnd/models/personagem.dart';
 
 
 class PersonagemCadastro extends StatefulWidget {
@@ -26,6 +27,7 @@ class _MyStatefulWidgetState extends State<StatefulWidget> {
   }
 
   var classes = [
+    'Guerreiro',
     'Clerigo',
     'Paladino',
     'Ladino',
@@ -33,9 +35,26 @@ class _MyStatefulWidgetState extends State<StatefulWidget> {
     'Druida',
   ];
   var selectedClass = -2;
+  int? id;
 
   @override
   Widget build(BuildContext context) {
+    PersonagemDAOInterface dao = PersonagemDAOSQLite();
+    //TODO ERRO Could not find a generator for route RouteSettings("personagens_cadastro", Instance of 'Personagem') in the _WidgetsAppState.
+    receberPersonagemParaAlteracao(context);
+
+    savePersonagem () {
+      if (_formKey.currentState!.validate()) {
+        Personagem p = Personagem(nome: nameController.text, classe: classes[selectedClass]);
+        dao.salvar(p).then((value) => {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Personagem ${p.nome} com classe ${p.classe} criado com sucesso!')),
+          ),
+          Navigator.pushReplacementNamed(context, '/personagens')
+        });
+      }
+    }
+
     return Scaffold(
       appBar: LeadingBar('Personagens'),
       body: Padding(
@@ -105,13 +124,7 @@ class _MyStatefulWidgetState extends State<StatefulWidget> {
               ),
               BigButton(
                 'Criar novo personagem', 
-                () {
-                  if (_formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Personagem ${nameController.text} com classe ${classes[selectedClass]} criado com sucesso!')),
-                    );
-                  }
-                }
+                savePersonagem
               ),
               const SizedBox(height: 16.0),
             ],
@@ -120,4 +133,17 @@ class _MyStatefulWidgetState extends State<StatefulWidget> {
       ),
     );
   }
+
+  void receberPersonagemParaAlteracao(BuildContext context) {
+    print('build');
+    var parametro = ModalRoute.of(context);
+    print(parametro!.settings.arguments);
+    if(parametro != null && parametro.settings.arguments != null) {
+      Personagem personagem = parametro.settings.arguments as Personagem;
+      id = personagem.id;
+      nameController.text = personagem.nome;
+      classController.text = personagem.classe;
+    }
+  }
+
 }

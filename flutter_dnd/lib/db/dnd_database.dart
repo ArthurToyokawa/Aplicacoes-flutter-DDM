@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_dnd/models/personagem.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -51,8 +50,6 @@ class DndDatabase {
     final db = await instance.database;
 
     final orderBy = '${PersonagemFields.id} ASC';
-    // final result =
-    //     await db.rawQuery('SELECT * FROM $tablePersonagens ORDER BY $orderBy');
 
     final result = await db.query(tablePersonagem, orderBy: orderBy);
 
