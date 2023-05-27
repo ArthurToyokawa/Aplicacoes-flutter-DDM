@@ -6,6 +6,7 @@ import 'package:flutter_dnd/db/dnd_database.dart';
 import 'package:flutter_dnd/models/monstro.dart';
 import 'package:flutter_dnd/models/personagem.dart';
 import 'package:flutter_dnd/services/monstro_service.dart';
+import 'package:flutter_dnd/routes.dart';
 
 
 class MonstroList extends StatefulWidget {
@@ -109,7 +110,7 @@ class _MonstroListState extends State<MonstroList> {
           BigButton(
             'Criar novo monstro',
             () {
-              Navigator.pushNamed(context, '/monstros_cadastro');
+              Navigator.pushNamed(context, Routes.monstros_cadastro);
             },
           ),
         ],

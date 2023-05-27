@@ -4,28 +4,19 @@ import 'package:flutter_dnd/components/leading_bar.dart';
 import 'package:flutter_dnd/dao/personagem_dao_interface.dart';
 import 'package:flutter_dnd/dao/personagem_dao_sqlite.dart';
 import 'package:flutter_dnd/models/personagem.dart';
-
+import 'package:flutter_dnd/routes.dart';
 
 class PersonagemCadastro extends StatefulWidget {
-  const PersonagemCadastro({super.key});
+  const PersonagemCadastro({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() {
-    return _MyStatefulWidgetState();
-  }
+  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
 }
-class _MyStatefulWidgetState extends State<StatefulWidget> {
+
+class _MyStatefulWidgetState extends State<PersonagemCadastro> {
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final classController = TextEditingController();
-
-  @override
-  void dispose() {
-    nameController.dispose();
-    classController.dispose();
-    super.dispose();
-  }
-
   var classes = [
     'Guerreiro',
     'Clerigo',
@@ -34,24 +25,52 @@ class _MyStatefulWidgetState extends State<StatefulWidget> {
     'Feiticeiro',
     'Druida',
   ];
-  var selectedClass = -2;
+  ValueNotifier<String?> selectedClass = ValueNotifier<String?>('Guerreiro');
   int? id;
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    classController.dispose();
+    selectedClass.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      receberPersonagemParaAlteracao(context);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     PersonagemDAOInterface dao = PersonagemDAOSQLite();
-    //TODO ERRO Could not find a generator for route RouteSettings("personagens_cadastro", Instance of 'Personagem') in the _WidgetsAppState.
-    receberPersonagemParaAlteracao(context);
 
-    savePersonagem () {
+    savePersonagem() {
       if (_formKey.currentState!.validate()) {
-        Personagem p = Personagem(nome: nameController.text, classe: classes[selectedClass]);
-        dao.salvar(p).then((value) => {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Personagem ${p.nome} com classe ${p.classe} criado com sucesso!')),
-          ),
-          Navigator.pushReplacementNamed(context, '/personagens')
-        });
+        if(id == null){
+          Personagem p = Personagem(nome: nameController.text, classe: selectedClass.value!);
+          dao.salvar(p).then((value) => {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Personagem ${p.nome} com classe ${p.classe} criado com sucesso!'),
+              ),
+            ),
+            Navigator.pushNamed(context, Routes.personagens),
+          });
+        } else {
+          Personagem p = Personagem(id: id, nome: nameController.text, classe: selectedClass.value!);
+          dao.alterar(p).then((value) => {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Personagem ${p.nome} com classe ${p.classe} alterado com sucesso!'),
+              ),
+            ),            
+            Navigator.pushNamed(context, Routes.personagens),
+          });
+        }
       }
     }
 
@@ -98,32 +117,38 @@ class _MyStatefulWidgetState extends State<StatefulWidget> {
                       ),
                     ),
                     const SizedBox(height: 8.0),
-                    DropdownButtonFormField<int>(
-                      items: classes.asMap().entries.map((entry) {
-                        return DropdownMenuItem(
-                          value: entry.key,
-                          child: Text(entry.value),
+                    ValueListenableBuilder<String?>(
+                      valueListenable: selectedClass,
+                      builder: (context, value, _) {
+                        return DropdownButtonFormField<String>(
+                          value: value,
+                          items: classes.map((entry) {
+                            return DropdownMenuItem(
+                              value: entry,
+                              child: Text(entry),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            selectedClass.value = value!;
+                          },
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Por favor, Selecione uma classe';
+                            }
+                            return null;
+                          },
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'Selecione uma classe',
+                          ),
                         );
-                      }).toList(),
-                      onChanged: (value) {
-                        selectedClass = value!;
                       },
-                      validator: (value) {
-                        if (value == null) {
-                          return 'Por favor, Selecione uma classe';
-                        }
-                        return null;
-                      },
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Selecione uma classe',
-                      ),
                     ),
                   ],
                 ),
               ),
               BigButton(
-                'Criar novo personagem', 
+                id == null? 'Criar novo personagem': 'Alterar personagem', 
                 savePersonagem
               ),
               const SizedBox(height: 16.0),
@@ -135,15 +160,13 @@ class _MyStatefulWidgetState extends State<StatefulWidget> {
   }
 
   void receberPersonagemParaAlteracao(BuildContext context) {
-    print('build');
     var parametro = ModalRoute.of(context);
-    print(parametro!.settings.arguments);
-    if(parametro != null && parametro.settings.arguments != null) {
+    if (parametro != null && parametro.settings.arguments != null) {
       Personagem personagem = parametro.settings.arguments as Personagem;
       id = personagem.id;
       nameController.text = personagem.nome;
-      classController.text = personagem.classe;
+      selectedClass.value = personagem.classe;
+      setState(() {});
     }
   }
-
 }

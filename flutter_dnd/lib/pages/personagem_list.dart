@@ -7,6 +7,7 @@ import 'package:flutter_dnd/dao/personagem_dao_sqlite.dart';
 import 'package:flutter_dnd/dao/personagem_dao_interface.dart';
 import 'package:flutter_dnd/db/dnd_database.dart';
 import 'package:flutter_dnd/models/personagem.dart';
+import 'package:flutter_dnd/routes.dart';
 
 
 class PersonagemList extends StatefulWidget {
@@ -167,9 +168,11 @@ class _PersonagemListState extends State<PersonagemList> {
                               children: [ 
                                 IconButton(
                                   onPressed: () => {
-                                    //TODO ERRO Could not find a generator for route RouteSettings("personagens_cadastro", Instance of 'Personagem') in the _WidgetsAppState.
-                                    print(p.nome),
-                                    Navigator.pushNamed(context, 'personagens_cadastro', arguments: p).then((value) => loadPersonagens())                                    
+                                    Navigator.pushNamed(
+                                      context, 
+                                      Routes.personagens_cadastro, 
+                                      arguments: p
+                                      ).then((value) => loadPersonagens())                                    
                                   }, 
                                   icon: const Icon(Icons.edit), 
                                   color: Colors.orange,
@@ -197,7 +200,7 @@ class _PersonagemListState extends State<PersonagemList> {
         BigButton(
           'Criar novo personagem',
           () {
-            Navigator.pushNamed(context, '/personagens_cadastro');
+            Navigator.pushNamed(context, Routes.personagens_cadastro);
           },
         ),
       ],

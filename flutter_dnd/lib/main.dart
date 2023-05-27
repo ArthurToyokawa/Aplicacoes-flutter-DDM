@@ -9,6 +9,7 @@ import 'package:flutter_dnd/pages/personagens_cadastro.dart';
 import 'package:flutter_dnd/pages/recuperar_senha.dart';
 import 'package:flutter_dnd/pages/rolar_ataque.dart';
 import 'package:flutter_dnd/pages/rolar_dados.dart';
+import 'package:flutter_dnd/routes.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -26,18 +27,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      routes: {
-        '/home':(context) => const Home(),
-        '/login': (context) => const Login(),
-        '/recuperar_senha': (context) => const RecuperarSenha(),
-        '/personagens':(context) => const PersonagemList(), 
-        '/personagens_cadastro':(context) => const PersonagemCadastro(), 
-        '/monstros':(context) => const MonstroList(), 
-        '/monstros_cadastro':(context) => const MonstroCadastro(), 
-        '/calculos':(context) => const Calculos(), 
-        '/rolar_dados':(context) => const RolarDados(), 
-        '/rolar_ataque':(context) => const RolarAtaque(), 
-      },
+      routes: Routes.routes,
       home: const Login(),
       theme: ThemeData(
         primarySwatch: Colors.blue,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dnd/components/big_button.dart';
 import 'package:flutter_dnd/components/leading_bar.dart';
+import 'package:flutter_dnd/routes.dart';
 
 class Calculos extends StatefulWidget {
   const Calculos({super.key});
@@ -22,13 +23,13 @@ class _MyStatefulWidgetState extends State<StatefulWidget> {
             const SizedBox(height: 16.0),
             BigButton('Rolar dados', 
               () {
-                Navigator.pushNamed(context, '/rolar_dados');
+                Navigator.pushNamed(context, Routes.rolar_dados);
               }
             ),
             const SizedBox(height: 8.0),
             BigButton('Rolar Ataque', 
               () {
-                Navigator.pushNamed(context, '/rolar_ataque');
+                Navigator.pushNamed(context, Routes.rolar_ataque);
               }
             ),
             const SizedBox(height: 16.0)

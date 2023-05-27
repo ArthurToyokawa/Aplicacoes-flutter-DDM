@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dnd/components/big_button.dart';
 import 'package:flutter_dnd/components/leading_bar.dart';
+import 'package:flutter_dnd/routes.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -22,17 +23,17 @@ class _MyStatefulWidgetState extends State<StatefulWidget> {
             const SizedBox(height: 16.0),
             BigButton(
               'Personagens', 
-              () {Navigator.pushNamed(context, '/personagens');}
+              () {Navigator.pushNamed(context, Routes.personagens);}
             ),
             const SizedBox(height: 8.0),
             BigButton(
               'Monstros', 
-              () {Navigator.pushNamed(context, '/monstros');}
+              () {Navigator.pushNamed(context, Routes.monstros);}
             ),
             const SizedBox(height: 8.0),
             BigButton(
               'Calculos', 
-              () {Navigator.pushNamed(context, '/calculos');}
+              () {Navigator.pushNamed(context, Routes.calculos);}
             ),
             const SizedBox(height: 16.0)
           ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dnd/routes.dart';
 
 class LeadingBar extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -17,7 +18,7 @@ class LeadingBar extends StatelessWidget implements PreferredSizeWidget {
       if(showHomeButton)
         Center(
           child: IconButton(
-            onPressed: () => {Navigator.pushNamed(context, '/home')},
+            onPressed: () => {Navigator.pushNamed(context, Routes.home)},
             icon:Icon(
               Icons.home, 
               color: Colors.blue.shade700, 

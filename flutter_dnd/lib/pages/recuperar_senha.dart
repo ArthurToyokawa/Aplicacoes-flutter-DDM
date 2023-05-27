@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dnd/components/big_button.dart';
 import 'package:flutter_dnd/components/leading_bar.dart';
+import 'package:flutter_dnd/routes.dart';
 
 
 class RecuperarSenha extends StatefulWidget {
@@ -65,7 +66,7 @@ class _MyStatefulWidgetState extends State<StatefulWidget> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Email de recuperação de senha enviado')),
                           );
-                          Navigator.pushNamed(context, '/home');
+                          Navigator.pushNamed(context, Routes.home);
                         }
                       }
                     ),

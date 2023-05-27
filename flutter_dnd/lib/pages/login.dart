@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dnd/components/big_button.dart';
 import 'package:flutter_dnd/components/leading_bar.dart';
+import 'package:flutter_dnd/routes.dart';
 
 
 class Login extends StatefulWidget {
@@ -83,14 +84,14 @@ class _MyStatefulWidgetState extends State<StatefulWidget> {
                       'Entrar', 
                       () {
                         if (_formKey.currentState!.validate()) {
-                          Navigator.pushReplacementNamed(context, '/home');
+                          Navigator.pushReplacementNamed(context, Routes.home);
                         }
                       }
                     ),
                     const SizedBox(height: 8.0),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/recuperar_senha');
+                        Navigator.pushNamed(context, Routes.recuperar_senha);
                       },
                       child: const Text(
                         'Esqueceu a senha?',
