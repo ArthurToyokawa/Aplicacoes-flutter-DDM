@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter_dnd/pages/calculos.dart';
 import 'package:flutter_dnd/pages/home.dart';
 import 'package:flutter_dnd/pages/login.dart';
@@ -5,6 +7,8 @@ import 'package:flutter_dnd/pages/monstro.dart';
 import 'package:flutter_dnd/pages/monstro_cadastro.dart';
 import 'package:flutter_dnd/pages/personagem_list.dart';
 import 'package:flutter_dnd/pages/personagens_cadastro.dart';
+import 'package:flutter_dnd/pages/armas_list.dart';
+import 'package:flutter_dnd/pages/armas_cadastro.dart';
 import 'package:flutter_dnd/pages/recuperar_senha.dart';
 import 'package:flutter_dnd/pages/rolar_ataque.dart';
 import 'package:flutter_dnd/pages/rolar_dados.dart';
@@ -15,6 +19,8 @@ class Routes{
   static const String recuperar_senha = '/recuperar_senha';
   static const String personagens = '/personagens'; 
   static const String personagens_cadastro = '/personagens_cadastro'; 
+  static const String armas = '/arma'; 
+  static const String armas_cadastro = '/arma_cadastro'; 
   static const String monstros = '/monstros'; 
   static const String monstros_cadastro = '/monstros_cadastro'; 
   static const String calculos = '/calculos'; 
@@ -27,6 +33,8 @@ class Routes{
     recuperar_senha: (context) => const RecuperarSenha(),
     personagens:(context) => const PersonagemList(), 
     personagens_cadastro:(context) => const PersonagemCadastro(), 
+    armas:(context) => const ArmaList(), 
+    armas_cadastro:(context) => const ArmaCadastro(), 
     monstros:(context) => const MonstroList(), 
     monstros_cadastro:(context) => const MonstroCadastro(), 
     calculos:(context) => const Calculos(), 

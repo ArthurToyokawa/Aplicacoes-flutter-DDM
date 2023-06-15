@@ -25,17 +25,21 @@ class _MyStatefulWidgetState extends State<StatefulWidget> {
               'Personagens', 
               () {Navigator.pushNamed(context, Routes.personagens);}
             ),
-            const SizedBox(height: 8.0),
+            const SizedBox(height: 16.0),
             BigButton(
               'Monstros', 
               () {Navigator.pushNamed(context, Routes.monstros);}
             ),
-            const SizedBox(height: 8.0),
+            const SizedBox(height: 16.0),
+            BigButton(
+              'Armas', 
+              () {Navigator.pushNamed(context, Routes.armas);}
+            ),
+            const SizedBox(height: 16.0),
             BigButton(
               'Calculos', 
               () {Navigator.pushNamed(context, Routes.calculos);}
-            ),
-            const SizedBox(height: 16.0)
+            )
           ],
         ),
       )

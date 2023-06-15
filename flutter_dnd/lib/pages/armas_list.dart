@@ -6,52 +6,52 @@ import 'package:flutter_dnd/components/leading_bar.dart';
 import 'package:flutter_dnd/components/tableCellDataText.dart';
 import 'package:flutter_dnd/components/tableCellDeleteEdit.dart';
 import 'package:flutter_dnd/components/tableCellTitle.dart';
-import 'package:flutter_dnd/dao/personagem_dao_sqlite.dart';
-import 'package:flutter_dnd/dao/personagem_dao_interface.dart';
-import 'package:flutter_dnd/models/personagem.dart';
+import 'package:flutter_dnd/dao/arma_dao_sqlite.dart';
+import 'package:flutter_dnd/dao/arma_dao_interface.dart';
+import 'package:flutter_dnd/models/arma.dart';
 import 'package:flutter_dnd/routes.dart';
 
 
-class PersonagemList extends StatefulWidget {
-  const PersonagemList({super.key});
+class ArmaList extends StatefulWidget {
+  const ArmaList({super.key});
 
   @override
-  _PersonagemListState createState() {	
-    return _PersonagemListState();	
+  _ArmaListState createState() {	
+    return _ArmaListState();	
   }
 }
-class _PersonagemListState extends State<PersonagemList> {
-  List<Personagem> personagens = [];
+class _ArmaListState extends State<ArmaList> {
+  List<Arma> armas = [];
 
   @override
   Widget build(BuildContext context) {
-    PersonagemDAOInterface dao = PersonagemDAOSQLite();
+    ArmaDAOInterface dao = ArmaDAOSQLite();
 
-  Future<List<Personagem>> loadPersonagens() {
+  Future<List<Arma>> loadArmas() {
     setState(() {});
     return dao.buscarTodos();
   }
 
-  deletePersonagem(int id) {
+  deleteArma(int id) {
     dao.excluir(id).then((v) => 
-      loadPersonagens()
+      loadArmas()
     );
   }
 
     return Scaffold(
-      appBar: LeadingBar('Personagens'),
+      appBar: LeadingBar('Armas'),
       body: FutureBuilder(
-        future: loadPersonagens(),
-        builder: (BuildContext context, AsyncSnapshot<List<Personagem>> lista){
+        future: loadArmas(),
+        builder: (BuildContext context, AsyncSnapshot<List<Arma>> lista){
           if(!lista.hasData) return const CircularProgressIndicator();
           if(lista.data == null) return Container();
-          List<Personagem> listaPersonagem = lista.data!;
-          return listaPersonagens(listaPersonagem, loadPersonagens, deletePersonagem);
+          List<Arma> listaArma = lista.data!;
+          return listaArmas(listaArma, loadArmas, deleteArma);
         },  
       )
     );
   }
-  Widget listaPersonagens(List<Personagem> listaPersonagem, loadPersonagens, deletePersonagem) {
+  Widget listaArmas(List<Arma> listaArma, loadArmas, deleteArma) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -70,27 +70,27 @@ class _PersonagemListState extends State<PersonagemList> {
                 ),
                 children: [
                   TableCellTitle('Nome'),
-                  TableCellTitle('Classe'),
+                  TableCellTitle('Dano'),
                   TableCellTitle('Ações'),
                 ],
               ),
-              // ...personagens.map(
-              ...listaPersonagem.map(
-                (p) => TableRow(
+              // ...armas.map(
+              ...listaArma.map(
+                (a) => TableRow(
                   children: [
-                    TableCellDataText(p.nome),
-                    TableCellDataText(p.classe),
+                    TableCellDataText(a.nome),
+                    TableCellDataText('${a.modDano} + ${a.numDados}d${a.dadoDano}'),
                     TableCellDeleteEdit(
                       () => {
                         Navigator.pushNamed(
                           context, 
-                          Routes.personagens_cadastro, 
-                          arguments: p
-                          ).then((value) => loadPersonagens())                                    
+                          Routes.armas_cadastro, 
+                          arguments: a
+                          ).then((value) => loadArmas())                                    
                       },
                       () => {
-                        deletePersonagem(p.id),
-                        loadPersonagens()
+                        deleteArma(a.id),
+                        loadArmas()
                       }
                     ),
                   ],
@@ -100,9 +100,9 @@ class _PersonagemListState extends State<PersonagemList> {
           ),
         ),
         BigButton(
-          'Criar novo personagem',
+          'Criar nova arma',
           () {
-            Navigator.pushNamed(context, Routes.personagens_cadastro);
+            Navigator.pushNamed(context, Routes.armas_cadastro);
           },
         ),
       ],

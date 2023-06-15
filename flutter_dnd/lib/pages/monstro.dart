@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dnd/components/big_button.dart';
 import 'package:flutter_dnd/components/leading_bar.dart';
-import 'package:flutter_dnd/db/dnd_database.dart';
 import 'package:flutter_dnd/models/monstro.dart';
 import 'package:flutter_dnd/models/personagem.dart';
 import 'package:flutter_dnd/services/monstro_service.dart';

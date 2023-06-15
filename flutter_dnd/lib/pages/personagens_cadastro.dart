@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dnd/components/FormTextField.dart';
+import 'package:flutter_dnd/components/bigLabel.dart';
 import 'package:flutter_dnd/components/big_button.dart';
 import 'package:flutter_dnd/components/leading_bar.dart';
 import 'package:flutter_dnd/dao/personagem_dao_interface.dart';
 import 'package:flutter_dnd/dao/personagem_dao_sqlite.dart';
+import 'package:flutter_dnd/models/arma.dart';
 import 'package:flutter_dnd/models/personagem.dart';
 import 'package:flutter_dnd/routes.dart';
 
@@ -51,7 +54,11 @@ class _MyStatefulWidgetState extends State<PersonagemCadastro> {
     savePersonagem() {
       if (_formKey.currentState!.validate()) {
         if(id == null){
-          Personagem p = Personagem(nome: nameController.text, classe: selectedClass.value!);
+          Personagem p = Personagem(
+            nome: nameController.text, 
+            classe: selectedClass.value!, 
+            arma: Arma(id: 1, nome: 'TODO', dadoDano: 0, modDano: 0, numDados: 0)
+          );
           dao.salvar(p).then((value) => {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -61,7 +68,11 @@ class _MyStatefulWidgetState extends State<PersonagemCadastro> {
             Navigator.pushNamed(context, Routes.personagens),
           });
         } else {
-          Personagem p = Personagem(id: id, nome: nameController.text, classe: selectedClass.value!);
+          Personagem p = Personagem(
+            nome: nameController.text, 
+            classe: selectedClass.value!, 
+            arma: Arma(id: 1, nome: 'TODO', dadoDano: 0, modDano: 0, numDados: 0)
+          );
           dao.alterar(p).then((value) => {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -87,35 +98,15 @@ class _MyStatefulWidgetState extends State<PersonagemCadastro> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Nome',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.0,
-                      ),
-                    ),
+                    BigLabel(title: 'Nome'),
                     const SizedBox(height: 8.0),
-                    TextFormField(
+                    FormTextField(
+                      fieldName: 'nome',
                       controller: nameController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Por favor, insira um nome';
-                        }
-                        return null;
-                      },
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Digite um nome',
-                      ),
+                      isRequired: true,
                     ),
                     const SizedBox(height: 16.0),
-                    const Text(
-                      'Classe',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.0,
-                      ),
-                    ),
+                    BigLabel(title: 'Classe'),
                     const SizedBox(height: 8.0),
                     ValueListenableBuilder<String?>(
                       valueListenable: selectedClass,

@@ -12,7 +12,9 @@ class PersonagemDAOSQLite implements PersonagemDAOInterface {
     Database db = await  Conexao().criar();
     final orderBy = '${PersonagemFields.id} ASC';
     final result = await db.query(tablePersonagem, orderBy: orderBy);
-    
+    print(result);
+    result.map((e) => print(e));
+    return [];
     return result.map((json) => Personagem.fromJson(json)).toList();
 
   }
