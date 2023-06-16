@@ -13,6 +13,7 @@ class Conexao{
   Future<Database> criar() async {
     if(_fechado){
       String path = join(await getDatabasesPath(), 'banco.db');   
+      //comentar essa linha se for manter o db entre sessões
       deleteDatabase(path);               
       _database = await openDatabase(                 
         path,                                         

@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_dnd/models/arma.dart';
+import 'package:flutter_dnd/utils/json.dart';
+
 
 final String tablePersonagem = 'personagens';
 
@@ -38,6 +40,6 @@ class Personagem {
     id: json[PersonagemFields.id] as int?,
     nome: json[PersonagemFields.nome] as String,
     classe: json[PersonagemFields.classe] as String,
-    arma: jsonDecode(json[PersonagemFields.arma] as String),
+    arma: Arma.fromJson(jsonStringToMap(json[PersonagemFields.arma] as String)),
   );
 }

@@ -3,6 +3,8 @@ import 'package:flutter_dnd/components/FormTextField.dart';
 import 'package:flutter_dnd/components/bigLabel.dart';
 import 'package:flutter_dnd/components/big_button.dart';
 import 'package:flutter_dnd/components/leading_bar.dart';
+import 'package:flutter_dnd/dao/arma_dao_interface.dart';
+import 'package:flutter_dnd/dao/arma_dao_sqlite.dart';
 import 'package:flutter_dnd/dao/personagem_dao_interface.dart';
 import 'package:flutter_dnd/dao/personagem_dao_sqlite.dart';
 import 'package:flutter_dnd/models/arma.dart';
@@ -29,6 +31,7 @@ class _MyStatefulWidgetState extends State<PersonagemCadastro> {
     'Druida',
   ];
   ValueNotifier<String?> selectedClass = ValueNotifier<String?>('Guerreiro');
+  ValueNotifier<Arma?> selectedWeapon = ValueNotifier<Arma?>(null);
   int? id;
 
   @override
@@ -36,6 +39,7 @@ class _MyStatefulWidgetState extends State<PersonagemCadastro> {
     nameController.dispose();
     classController.dispose();
     selectedClass.dispose();
+    selectedWeapon.dispose();
     super.dispose();
   }
 
@@ -50,14 +54,21 @@ class _MyStatefulWidgetState extends State<PersonagemCadastro> {
   @override
   Widget build(BuildContext context) {
     PersonagemDAOInterface dao = PersonagemDAOSQLite();
+    ArmaDAOInterface daoArma = ArmaDAOSQLite();
+
+    Future<List<Arma>> loadArmas() {
+      setState(() {});
+      return daoArma.buscarTodos();
+    }
 
     savePersonagem() {
+      print(selectedWeapon.value?.nome);
       if (_formKey.currentState!.validate()) {
         if(id == null){
           Personagem p = Personagem(
             nome: nameController.text, 
             classe: selectedClass.value!, 
-            arma: Arma(id: 1, nome: 'TODO', dadoDano: 0, modDano: 0, numDados: 0)
+            arma: selectedWeapon.value!
           );
           dao.salvar(p).then((value) => {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -71,7 +82,7 @@ class _MyStatefulWidgetState extends State<PersonagemCadastro> {
           Personagem p = Personagem(
             nome: nameController.text, 
             classe: selectedClass.value!, 
-            arma: Arma(id: 1, nome: 'TODO', dadoDano: 0, modDano: 0, numDados: 0)
+            arma: selectedWeapon.value!
           );
           dao.alterar(p).then((value) => {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -135,6 +146,43 @@ class _MyStatefulWidgetState extends State<PersonagemCadastro> {
                         );
                       },
                     ),
+                    const SizedBox(height: 16.0),
+                    BigLabel(title: 'Arma'),
+                    const SizedBox(height: 8.0),
+                    FutureBuilder(
+                      future: loadArmas(),
+                      builder: (BuildContext context, AsyncSnapshot<List<Arma>> lista){
+                        if(!lista.hasData || lista.data == null) return Container();
+                        List<Arma> listaArmas = lista.data!;
+                        return ValueListenableBuilder<Arma?>(
+                          valueListenable: selectedWeapon,
+                          builder: (context, value, _) {
+                            return DropdownButtonFormField<Arma>(
+                              items: listaArmas.map((arma) {
+                                return DropdownMenuItem(
+                                  value: arma,
+                                  child: Text(arma.nome),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                selectedWeapon.value = value;
+                              },
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'Por favor, Selecione uma arma';
+                                }
+                                return null;
+                              },
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                hintText: 'Selecione uma arma',
+                              ),
+                            );
+                          }
+                        );
+                        //
+                      },  
+                    )
                   ],
                 ),
               ),
@@ -157,6 +205,7 @@ class _MyStatefulWidgetState extends State<PersonagemCadastro> {
       id = personagem.id;
       nameController.text = personagem.nome;
       selectedClass.value = personagem.classe;
+      selectedWeapon.value = personagem.arma;
       setState(() {});
     }
   }

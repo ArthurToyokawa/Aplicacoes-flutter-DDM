@@ -1,8 +1,12 @@
 
 
+import 'dart:convert';
+
 import 'package:flutter_dnd/dao/personagem_dao_interface.dart';
 import 'package:flutter_dnd/db/sqlite/create_db.dart';
+import 'package:flutter_dnd/models/arma.dart';
 import 'package:flutter_dnd/models/personagem.dart';
+import 'package:flutter_dnd/utils/json.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class PersonagemDAOSQLite implements PersonagemDAOInterface {
@@ -12,11 +16,7 @@ class PersonagemDAOSQLite implements PersonagemDAOInterface {
     Database db = await  Conexao().criar();
     final orderBy = '${PersonagemFields.id} ASC';
     final result = await db.query(tablePersonagem, orderBy: orderBy);
-    print(result);
-    result.map((e) => print(e));
-    return [];
     return result.map((json) => Personagem.fromJson(json)).toList();
-
   }
 
   @override

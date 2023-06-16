@@ -1,3 +1,6 @@
+
+import 'package:flutter_dnd/utils/json.dart';
+
 final String tableArma = 'armas';
 
 class ArmaFields {
@@ -36,11 +39,12 @@ class Arma {
   }
 
   static Arma fromJson(Map<String, Object?> json) => Arma(
-    id: json[ArmaFields.id] as int?,
+    id: jsonCheckStringInt(json[ArmaFields.id]),
     nome: json[ArmaFields.nome] as String,
-    modDano: json[ArmaFields.modDano] as int,
-    numDados: json[ArmaFields.numDados] as int,
-    dadoDano: json[ArmaFields.dadoDano] as int,
+    modDano: jsonCheckStringInt(json[ArmaFields.modDano]) as int,
+    numDados: jsonCheckStringInt(json[ArmaFields.numDados]) as int,
+    dadoDano: jsonCheckStringInt(json[ArmaFields.dadoDano]) as int,
   );
+
 
 }

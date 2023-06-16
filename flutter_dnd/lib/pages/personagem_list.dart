@@ -71,6 +71,7 @@ class _PersonagemListState extends State<PersonagemList> {
                 children: [
                   TableCellTitle('Nome'),
                   TableCellTitle('Classe'),
+                  TableCellTitle('Arma'),
                   TableCellTitle('Ações'),
                 ],
               ),
@@ -80,6 +81,7 @@ class _PersonagemListState extends State<PersonagemList> {
                   children: [
                     TableCellDataText(p.nome),
                     TableCellDataText(p.classe),
+                    TableCellDataText(p.arma.nome),
                     TableCellDeleteEdit(
                       () => {
                         Navigator.pushNamed(
