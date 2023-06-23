@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dnd/components/DropdownFormField.dart';
 import 'package:flutter_dnd/components/FormTextField.dart';
 import 'package:flutter_dnd/components/bigLabel.dart';
 import 'package:flutter_dnd/components/big_button.dart';
@@ -62,7 +63,6 @@ class _MyStatefulWidgetState extends State<PersonagemCadastro> {
     }
 
     savePersonagem() {
-      print(selectedWeapon.value?.nome);
       if (_formKey.currentState!.validate()) {
         if(id == null){
           Personagem p = Personagem(
@@ -80,6 +80,7 @@ class _MyStatefulWidgetState extends State<PersonagemCadastro> {
           });
         } else {
           Personagem p = Personagem(
+            id: id,
             nome: nameController.text, 
             classe: selectedClass.value!, 
             arma: selectedWeapon.value!
@@ -149,39 +150,9 @@ class _MyStatefulWidgetState extends State<PersonagemCadastro> {
                     const SizedBox(height: 16.0),
                     BigLabel(title: 'Arma'),
                     const SizedBox(height: 8.0),
-                    FutureBuilder(
-                      future: loadArmas(),
-                      builder: (BuildContext context, AsyncSnapshot<List<Arma>> lista){
-                        if(!lista.hasData || lista.data == null) return Container();
-                        List<Arma> listaArmas = lista.data!;
-                        return ValueListenableBuilder<Arma?>(
-                          valueListenable: selectedWeapon,
-                          builder: (context, value, _) {
-                            return DropdownButtonFormField<Arma>(
-                              items: listaArmas.map((arma) {
-                                return DropdownMenuItem(
-                                  value: arma,
-                                  child: Text(arma.nome),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                selectedWeapon.value = value;
-                              },
-                              validator: (value) {
-                                if (value == null) {
-                                  return 'Por favor, Selecione uma arma';
-                                }
-                                return null;
-                              },
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'Selecione uma arma',
-                              ),
-                            );
-                          }
-                        );
-                        //
-                      },  
+                    DropdownFormField(
+                      opcaoSelecionado: selectedWeapon,
+                      consultarTodos: daoArma.buscarTodos,
                     )
                   ],
                 ),

@@ -42,4 +42,21 @@ class Personagem {
     classe: json[PersonagemFields.classe] as String,
     arma: Arma.fromJson(jsonStringToMap(json[PersonagemFields.arma] as String)),
   );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Personagem &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          nome == other.nome &&
+          classe == other.classe &&
+          arma == other.arma;
+
+  @override
+  int get hashCode =>
+      id.hashCode ^
+      nome.hashCode ^
+      classe.hashCode ^
+      arma.hashCode;
 }

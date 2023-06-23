@@ -1,0 +1,36 @@
+06/07 entrega proj
+
+1 crud atualmente funcionando e 1 quase completo
+funcionalidade rudimentar de calculos de combate
+
+sabado letivo é possivel
+
+
+Orcamento projeto:
+Projeto:
+1- complexidade média: não tem entidades muito complexas mas elas tem varios campos. Os calculos tambem envolvem algoritimos mais complexos para calcular a probabilidade dado varios eventos aleatórios, A ui não precisa de muitas mudancas mas é necessario muito mais telas de cruds e calculos para ter um MPV
+
+2- crud atualmente funcionando e 1 quase completo
+funcionalidade rudimentar de calculos de combate
+
+3- eu terminei os cruds e procurei uma maneira um pouco diferente de implementar bd
+
+4- não valido toda semana mas mostro o progesso periodicamente
+
+desempenho:
+1- eu vim em quaso todas as aulas e produzo nelas
+
+2- chego no horario certo e raramente saio pro intervalo
+
+3- eu produzo muito bem em alguns dias e muito mal em outros
+
+Aprendizagem:
+1- Eu aprendi tudo que eu sei de flutter e sqlite nesse ano e acho que aprendi bastante
+
+2- eu consigo implementar coisas simples sem auda ou coisas mais complexas com pesquisas
+
+3- Na parte fundamental melhorei um pouco em OO e SQL mas eu ja sabia muito
+
+4- eu revejo meu codigo e vou o arrumando/refatorando conforme vai sendo modificado em outras partes
+
+Eu acho que é possivel terminar o cadastro de personagens como deveria e 

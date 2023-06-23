@@ -46,5 +46,23 @@ class Arma {
     dadoDano: jsonCheckStringInt(json[ArmaFields.dadoDano]) as int,
   );
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Arma &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          nome == other.nome &&
+          modDano == other.modDano &&
+          numDados == other.numDados &&
+          dadoDano == other.dadoDano;
+
+  @override
+  int get hashCode =>
+      id.hashCode ^
+      nome.hashCode ^
+      modDano.hashCode ^
+      numDados.hashCode ^
+      dadoDano.hashCode;  
 
 }
