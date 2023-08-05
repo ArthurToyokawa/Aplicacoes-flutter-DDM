@@ -1,7 +1,7 @@
 
 import 'package:flutter_dnd/utils/json.dart';
 
-final String tableArma = 'armas';
+final String tableArma = 'arma';
 
 class ArmaFields {
     static final List<String> values = [

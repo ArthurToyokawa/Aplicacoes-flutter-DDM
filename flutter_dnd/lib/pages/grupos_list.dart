@@ -6,52 +6,53 @@ import 'package:flutter_dnd/components/leading_bar.dart';
 import 'package:flutter_dnd/components/tableCellDataText.dart';
 import 'package:flutter_dnd/components/tableCellDeleteEdit.dart';
 import 'package:flutter_dnd/components/tableCellTitle.dart';
-import 'package:flutter_dnd/dao/personagem_dao_sqlite.dart';
-import 'package:flutter_dnd/dao/personagem_dao_interface.dart';
-import 'package:flutter_dnd/models/personagem.dart';
+import 'package:flutter_dnd/dao/grupo_dao_sqlite.dart';
+import 'package:flutter_dnd/dao/grupo_dao_interface.dart';
+import 'package:flutter_dnd/models/grupo.dart';
 import 'package:flutter_dnd/routes.dart';
 
 
-class PersonagemList extends StatefulWidget {
-  const PersonagemList({super.key});
+class GrupoList extends StatefulWidget {
+  const GrupoList({super.key});
 
   @override
-  _PersonagemListState createState() {	
-    return _PersonagemListState();	
+  _GrupoListState createState() {	
+    return _GrupoListState();	
   }
 }
-class _PersonagemListState extends State<PersonagemList> {
-  List<Personagem> personagens = [];
+class _GrupoListState extends State<GrupoList> {
+  List<Grupo> grupos = [];
 
   @override
   Widget build(BuildContext context) {
-    PersonagemDAOInterface dao = PersonagemDAOSQLite();
+    GrupoDAOInterface dao = GrupoDAOSQLite();
 
-  Future<List<Personagem>> loadPersonagens() {
+  Future<List<Grupo>> loadGrupos() {
     setState(() {});
-    return dao.buscarTodos();
+    return dao.buscarTodosTest();
+    // return dao.buscarTodos();
   }
 
-  deletePersonagem(int id) {
+  deleteGrupo(int id) {
     dao.excluir(id).then((v) => 
-      loadPersonagens()
+      loadGrupos()
     );
   }
 
     return Scaffold(
-      appBar: LeadingBar('Personagens'),
+      appBar: LeadingBar('Grupos'),
       body: FutureBuilder(
-        future: loadPersonagens(),
-        builder: (BuildContext context, AsyncSnapshot<List<Personagem>> lista){
+        future: loadGrupos(),
+        builder: (BuildContext context, AsyncSnapshot<List<Grupo>> lista){
           if(!lista.hasData) return const CircularProgressIndicator();
           if(lista.data == null) return Container();
-          List<Personagem> listaPersonagem = lista.data!;
-          return listaPersonagens(listaPersonagem, loadPersonagens, deletePersonagem);
+          List<Grupo> listaGrupo = lista.data!;
+          return listaGrupos(listaGrupo, loadGrupos, deleteGrupo);
         },  
       )
     );
   }
-  Widget listaPersonagens(List<Personagem> listaPersonagem, loadPersonagens, deletePersonagem) {
+  Widget listaGrupos(List<Grupo> listaGrupo, loadGrupos, deleteGrupo) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -70,29 +71,28 @@ class _PersonagemListState extends State<PersonagemList> {
                 ),
                 children: [
                   TableCellTitle('Nome'),
-                  TableCellTitle('Classe'),
-                  TableCellTitle('Arma'),
+                  TableCellTitle('Grupos'),
                   TableCellTitle('Ações'),
                 ],
               ),
-              // ...personagens.map(
-              ...listaPersonagem.map(
-                (p) => TableRow(
+              // ...grupos.map(
+              ...listaGrupo.map(
+                (g) => TableRow(
                   children: [
-                    TableCellDataText(p.nome),
-                    TableCellDataText(p.classe),
-                    TableCellDataText(p.arma.nome),
+                    TableCellDataText(g.nome),
+                    TableCellDataText('p'),//g.personagens![0].nome),
+                    // TableCellDataText(p.arma.nome),
                     TableCellDeleteEdit(
                       () => {
                         Navigator.pushNamed(
                           context, 
-                          Routes.personagens_cadastro, 
-                          arguments: p
-                          ).then((value) => loadPersonagens())                                    
+                          Routes.grupos_cadastro, 
+                          arguments: g
+                          ).then((value) => loadGrupos())                                    
                       },
                       () => {
-                        deletePersonagem(p.id),
-                        loadPersonagens()
+                        deleteGrupo(g.id),
+                        loadGrupos()
                       }
                     ),
                   ],
@@ -102,12 +102,9 @@ class _PersonagemListState extends State<PersonagemList> {
           ),
         ),
         BigButton(
-          'Criar novo personagem',
+          'Criar novo grupo',
           () {
-            Navigator.pushNamed(context, Routes.personagens_cadastro)
-            .then(
-              (value) => loadPersonagens()
-            );
+            Navigator.pushNamed(context, Routes.grupos_cadastro);
           },
         ),
       ],

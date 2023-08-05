@@ -102,7 +102,10 @@ class _ArmaListState extends State<ArmaList> {
         BigButton(
           'Criar nova arma',
           () {
-            Navigator.pushNamed(context, Routes.armas_cadastro);
+            Navigator.pushNamed(context, Routes.armas_cadastro)
+            .then(
+              (value) => loadArmas()
+            );
           },
         ),
       ],

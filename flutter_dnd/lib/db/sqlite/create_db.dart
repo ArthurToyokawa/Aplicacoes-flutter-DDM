@@ -4,6 +4,8 @@ import 'dart:async';
 
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:flutter_dnd/models/personagem.dart';
+import 'package:flutter_dnd/models/grupo.dart';
+import 'package:flutter_dnd/models/grupo_personagem.dart';
 import 'package:flutter_dnd/models/arma.dart';
 
 class Conexao{
@@ -66,6 +68,36 @@ class Conexao{
     await db.insert(tablePersonagem, p.toJson());
     await db.insert(tablePersonagem, p2.toJson());
     await db.insert(tablePersonagem, p3.toJson());
+
+
+    await db.execute('''
+      CREATE TABLE $tableGrupo(
+        ${GrupoFields.id} $idConstraints,
+        ${GrupoFields.nome} $textConstraints $nn
+      );
+      CREATE TABLE $tableGrupoPersonagem(
+        ${GrupoPersonagemFields.id} $idConstraints,
+        ${GrupoPersonagemFields.grupo} $intConstraints $nn,
+        ${GrupoPersonagemFields.personagem} $intConstraints $nn,
+        FOREIGN KEY (${GrupoPersonagemFields.grupo}) REFERENCES $tableGrupo(${GrupoFields.id}) ON DELETE NO ACTION,
+        FOREIGN KEY (${GrupoPersonagemFields.personagem}) REFERENCES $tablePersonagem(${PersonagemFields.id}) ON DELETE NO ACTION
+      )
+    ''');
+           
+    Grupo g = Grupo(nome: 'principais');
+    Grupo g2 = Grupo(nome: 'secundarios');
+    print(g.toJson());
+    await db.insert(tableGrupo, g.toJson());
+    await db.insert(tableGrupo, g2.toJson());
+
+    GrupoPersonagem gp = GrupoPersonagem(grupo: g, personagem: p);
+    GrupoPersonagem gp2 = GrupoPersonagem(grupo: g, personagem: p2);
+    GrupoPersonagem gp3 = GrupoPersonagem(grupo: g2, personagem: p3);
+    print(p.toJson());
+    await db.insert(tableGrupoPersonagem, gp.toJson());
+    await db.insert(tableGrupoPersonagem, gp2.toJson());
+    await db.insert(tableGrupoPersonagem, gp3.toJson());
+
 
 
   }

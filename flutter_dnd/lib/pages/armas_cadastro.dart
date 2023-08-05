@@ -54,7 +54,6 @@ class _MyStatefulWidgetState extends State<ArmaCadastro> {
             modDano:  int.parse(modDanoController.text),
             numDados: int.parse(numDadosController.text),
             dadoDano:  int.parse(dadoDanoController.text),
-
           );
           dao.salvar(a).then((value) => {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -62,7 +61,7 @@ class _MyStatefulWidgetState extends State<ArmaCadastro> {
                 content: Text('Arma ${a.nome} criado com sucesso!'),
               ),
             ),
-            Navigator.pushNamed(context, Routes.armas),
+            Navigator.pop(context, Routes.armas),
           });
         } else {
           Arma a = Arma(
@@ -77,7 +76,7 @@ class _MyStatefulWidgetState extends State<ArmaCadastro> {
                 content: Text('Arma ${a.nome} alterado com sucesso!'),
               ),
             ),            
-            Navigator.pushNamed(context, Routes.armas),
+            Navigator.pop(context, Routes.armas),
           });
         }
       }

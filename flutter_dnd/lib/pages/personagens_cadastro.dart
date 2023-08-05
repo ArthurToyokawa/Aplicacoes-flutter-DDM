@@ -76,7 +76,7 @@ class _MyStatefulWidgetState extends State<PersonagemCadastro> {
                 content: Text('Personagem ${p.nome} com classe ${p.classe} criado com sucesso!'),
               ),
             ),
-            Navigator.pushNamed(context, Routes.personagens),
+            Navigator.pop(context, Routes.personagens),
           });
         } else {
           Personagem p = Personagem(
@@ -91,7 +91,7 @@ class _MyStatefulWidgetState extends State<PersonagemCadastro> {
                 content: Text('Personagem ${p.nome} com classe ${p.classe} alterado com sucesso!'),
               ),
             ),            
-            Navigator.pushNamed(context, Routes.personagens),
+            Navigator.pop(context, Routes.personagens),
           });
         }
       }

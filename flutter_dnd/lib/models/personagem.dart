@@ -3,7 +3,7 @@ import 'package:flutter_dnd/models/arma.dart';
 import 'package:flutter_dnd/utils/json.dart';
 
 
-final String tablePersonagem = 'personagens';
+final String tablePersonagem = 'personagem';
 
 class PersonagemFields {
     static final List<String> values = [

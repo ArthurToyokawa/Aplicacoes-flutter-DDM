@@ -28,6 +28,11 @@ class _MyStatefulWidgetState extends State<StatefulWidget> {
             ),
             const SizedBox(height: 16.0),
             BigButton(
+              'Grupos', 
+              () {Navigator.pushNamed(context, Routes.grupos);}
+            ),
+            const SizedBox(height: 16.0),
+            BigButton(
               'Monstros', 
               () {Navigator.pushNamed(context, Routes.monstros);}
             ),
